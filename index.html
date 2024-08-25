@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Basic Calculator</title>
+  <style>
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    #particles-js {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      width: 100%;
+      height: 100%;
+      background: rgb(4 47 46);
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: 10% 90%;
+      height: 100%;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+    }
+
+    h1 {
+      color: rgb(16 185 129);
+      align-self: center;
+      justify-self: center;
+      margin: 0;
+      padding: 1rem;
+      font-size: 44px;
+    }
+
+    h1::selection {
+      background: rgb(17 94 89);
+    }
+
+    #calculator {
+      align-self: center;
+      justify-self: center;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 8px;
+      max-width: 300px;
+      width: 40vw;
+      background: linear-gradient(rgb(15 118 110), rgb(24, 92, 86));
+      padding: 2rem 1rem 2rem 1rem;
+      border: 2px solid rgb(4 47 46);
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    button {
+      user-select: none;
+      box-sizing: border-box;
+      padding: 10px;
+      font-size: 16px;
+      text-align: center;
+      cursor: pointer;
+      background-color: rgb(7 59 54);
+      border: 1px solid rgb(3 27 24);
+      border-radius: 8px;
+      color: rgb(255, 255, 255);
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: rgb(3 102 94);
+    }
+    
+    button:active{
+      background-color: rgb(12, 126, 116);
+    }
+
+    .operator,
+    #clearButton {
+      background: rgb(0 83 74);
+      color: white;
+    }
+
+    #display {
+      user-select: none;
+      color: white;
+      grid-column: span 4;
+      padding: 10px;
+      text-align: right;
+      background-color: rgb(0 55 49);
+      border-radius: 8px;
+      font-size: 1.5rem;
+      height:30px;
+      overflow: hidden;
+    }
+
+    @media screen and (max-width: 1500px) {
+      h1{
+        font-size:32px;
+      }
+    }
+
+    @media screen and (max-width: 800px) {
+      h1{
+        font-size:20px;
+      }
+    }
+
+    @media screen and (max-width: 485px) {
+      h1{
+        font-size: 13px;
+      }
+    }
+
+
+  </style>
+
+</head>
+
+<body>
+  <div id="particles-js"></div>
+  <div class="content">
+    <h1>CALCULATOR | MUHAMMAD WASIF SHAKEEL</h1>
+    <div id="calculator">
+      <div id="display"></div>
+      <button id="clearButton">C</button>
+      <button class="operator" data-value="/">/</button>
+      <button class="operator" data-value="*">*</button>
+      <button class="operator" data-value="-">-</button>
+      <button class="number" data-value="7">7</button>
+      <button class="number" data-value="8">8</button>
+      <button class="number" data-value="9">9</button>
+      <button class="operator" data-value="+">+</button>
+      <button class="number" data-value="4">4</button>
+      <button class="number" data-value="5">5</button>
+      <button class="number" data-value="6">6</button>
+      <button class="number" data-value=".">.</button>
+      <button class="number" data-value="1">1</button>
+      <button class="number" data-value="2">2</button>
+      <button class="number" data-value="3">3</button>
+      <button class="number" data-value="0">0</button>
+      <button id="equalsButton" data-value="=">=</button>
+    </div>
+  </div>
+
+
+  <script>
+    let display = document.getElementById('display');
+    let clearButton = document.getElementById('clearButton');
+    let equalsButton = document.getElementById('equalsButton');
+    let numberButtons = document.querySelectorAll('.number');
+    let operatorButtons = document.querySelectorAll('.operator');
+
+    clearButton.addEventListener('click', clearDisplay);
+    equalsButton.addEventListener('click', calculateResult);
+
+    numberButtons.forEach(button => {
+      button.addEventListener('click', () => appendToDisplay(button.dataset.value));
+    });
+
+    operatorButtons.forEach(button => {
+      button.addEventListener('click', () => appendToDisplay(button.dataset.value));
+    });
+
+    function appendToDisplay(value) {
+      display.innerText += value;
+    }
+
+    function clearDisplay() {
+      display.innerText = '';
+    }
+
+    function calculateResult() {
+      let expression = display.innerText;
+
+      // Check for division by zero
+      if (expression.includes('/0')) {
+        display.innerText = 'Error';
+        return;
+      }
+
+      try {
+        let result = eval(expression);
+        display.innerText = result;
+      } catch (error) {
+        display.innerText = 'Error';
+      }
+    }
+  </script>
+  <script type="text/javascript" src="particles.js"></script>
+  <script type="text/javascript" src="app.js"></script>
+</body>
+
+</html>
